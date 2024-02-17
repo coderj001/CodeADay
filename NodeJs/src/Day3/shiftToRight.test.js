@@ -1,3 +1,4 @@
+/* eslint-env jest */
 /**
  *
  * shiftToRight(80, 3) ➞ 10
@@ -9,4 +10,17 @@
  *
  */
 
+const shiftToRight = require('./shiftToRight')
 
+describe('shiftToRight()', () => {
+  test('Given 80 and 3, should return 10', () => {
+    const given = {
+      arg1: 80,
+      arg2: 3
+    }
+    const expected = 10
+
+    const actual = shiftToRight(given.arg1, given.arg2)
+    expect(actual).toEqual(expected)
+  })
+})
