@@ -1,3 +1,4 @@
-const shiftToRight = require('./shiftToRight')
+const primeNum = require('./primeNum')
 
-console.log(shiftToRight(80, 3))
+const prime = primeNum(25)
+console.log(prime)

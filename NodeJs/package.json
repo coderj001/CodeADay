@@ -5,13 +5,14 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/",
-    "lint": "eslint src/**",
+    "lint": "eslint src/** --ignore-path .gitignore",
+    "fix:lint": "eslint --fix src/**",
     "pretest": "npm run lint",
     "test": "jest --runInBand src",
     "coverage": "jest --collectCoverageFrom=src/**.js --coverage src"
   },
   "keywords": [],
-  "author": "José Antonio Reyes <imjaroiswebdev@gmail.com (https://imjaroiswebdev.tech)",
+  "author": "Raju Ghorai <rajughorai41410@gmail.com (https://rajughorai.xyz)",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^5.16.0",
