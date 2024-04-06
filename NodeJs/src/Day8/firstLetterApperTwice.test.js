@@ -53,4 +53,20 @@ describe('firstLetterApperTwice()', () => {
     const actual = firstLetterApperTwice(given)
     expect(actual).toEqual(expected)
   })
+
+  test('Given "z", should return undefined', () => {
+    const given = 'z'
+    const expected = undefined
+
+    const actual = firstLetterApperTwice(given)
+    expect(actual).toEqual(expected)
+  })
+
+  test('Given 1, should return undefined', () => {
+    const given = 1
+    const expected = undefined
+
+    const actual = firstLetterApperTwice(given)
+    expect(actual).toEqual(expected)
+  })
 })
