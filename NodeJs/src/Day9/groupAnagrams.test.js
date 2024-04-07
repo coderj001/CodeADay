@@ -7,9 +7,9 @@
 const groupAnagram = require('./groupAnagrams')
 
 describe('groupAnagram()', () => {
-  test('Given array of strings "cat", "Tac", "bat", "tap", should return group [["cat", "Tac"], ["bat", "tap"]] ', () => {
-    const given = ['cat', 'Tac', 'bat', 'tap']
-    const expected = [['cat', 'Tac'], ['bat', 'tap']]
+  test('Given array of strings "cat", "tac", "bat", "tap", should return group [["cat", "tac"], ["bat", "tap"]] ', () => {
+    const given = ['cat', 'tac', 'bat', 'tab']
+    const expected = [['cat', 'tac'], ['bat', 'tab']]
 
     const actual = groupAnagram(given)
     expect(actual).toEqual(expected)

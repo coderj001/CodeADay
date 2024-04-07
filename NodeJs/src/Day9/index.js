@@ -1,3 +1,3 @@
-const groupAnagram = require('./groupAnagram')
+const groupAnagram = require('./groupAnagrams')
 
-console.log(groupAnagram('letters'))
+console.log(groupAnagram(['cat', 'tac', 'bat', 'tab']))
