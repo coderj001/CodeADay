@@ -12,6 +12,8 @@
 //   }
 // }
 
+// Time Complexity: O(26)
+// Better solution than hashset
 function firstLetterApperTwice (s) {
   if (s.length > 2 && typeof s === 'string') {
     let seenLetters = []
