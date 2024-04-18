@@ -3,7 +3,7 @@
  *
  */
 
-function sortArrayOfZerosOnesTwos(arr) {
+function sortArrayOfZerosOnesTwos (arr) {
   let count = [0, 0, 0]
   for (let v in arr) {
     count[arr[v]]++
