@@ -7,7 +7,7 @@
 const groupAnagram = require('./groupAnagrams')
 
 describe('groupAnagram()', () => {
-  test('Given array of strings "cat", "tac", "bat", "tab", should return group [["cat", "tac"], ["bat", "tab"]] ', () => {
+  test('Given array of strings "cat", "tac", "bat", "tab", should return group [["cat", "tac"], ["bat", "tab"]]', () => {
     const given = ['cat', 'tac', 'bat', 'tab']
     const expected = [['cat', 'tac'], ['bat', 'tab']]
 
