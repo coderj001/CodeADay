@@ -1,5 +1,34 @@
 #!/bin/bash
 
+no_dir=true
+
+while getopts ":h-:" opt; do
+  case $opt in
+    -)
+      case "${OPTARG}" in
+        no-dir)
+          no_dir=false
+          ;;
+        *)
+          echo "Invalid option: --${OPTARG}" >&2
+          exit 1
+          ;;
+      esac
+      ;;
+    h)
+      echo "Usage: $(basename $0) [--no-dir]" >&2
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND - 1))
+
+
 base_dir="./src"
 
 # Take input for filename
@@ -7,13 +36,17 @@ read -p "Enter the filename (default is sample): " filename
 filename=${filename:-"sample"}
 
 last_dir=$(ls -d "$base_dir"/Day* 2>/dev/null | sort -V | tail -n 1)
-last_num=$(echo "$last_dir" | grep -o '[0-9]*$')
-next_num=$((last_num + 1))
+if [ $no_dir ]; then
+  last_num=$(echo "$last_dir" | grep -o '[0-9]*$')
+  next_num=$((last_num + 1))
 
-new_dir="Day$next_num"
-mkdir -p "$base_dir/$new_dir"
+  new_dir="Day$next_num"
+  mkdir -p "$base_dir/$new_dir"
 
-touch "$base_dir/$new_dir/index.js" "$base_dir/$new_dir/$filename.js" "$base_dir/$new_dir/$filename.test.js"
+  touch "$base_dir/$new_dir/index.js" "$base_dir/$new_dir/$filename.js" "$base_dir/$new_dir/$filename.test.js"
+else
+  touch "$base_dir/$new_dir/$filename.js" "$base_dir/$new_dir/$filename.test.js"
+fi
 
 echo """function $filename (params) {}
 

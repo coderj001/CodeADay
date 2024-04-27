@@ -7,6 +7,7 @@
     "start": "node src/",
     "lint": "eslint src/** --ignore-path .gitignore",
     "fix:lint": "eslint --fix src/**",
+    "gen": "sh ./manager.sh",
     "pretest": "npm run lint",
     "test": "jest --runInBand src",
     "coverage": "jest --collectCoverageFrom=src/**.js --coverage src"
