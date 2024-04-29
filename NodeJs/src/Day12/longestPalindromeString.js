@@ -31,4 +31,7 @@ function checkPalindrome (str) {
   return rev === str
 }
 
+// TODO: Solve in dynamic programming
+// https://www.geeksforgeeks.org/longest-palindromic-substring-using-dynamic-programming-2/
+
 module.exports = longestPalindromeString

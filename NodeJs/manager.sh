@@ -67,25 +67,26 @@ if [ "$no_dir" = true ]; then
 else
   last_dir=$(ls -d "$base_dir"/Day* 2>/dev/null | sort -V | tail -n 1)
   touch "$last_dir/$filename.js" "$last_dir/$filename.test.js"
-  echo """function $filename (params) {}
+  echo """
+module.exports = $filename
+  """ > "$last_dir/$filename.js"
 
-  module.exports = $filename""" > "$last_dir/$filename.js"
+  echo """
+/* eslint-env jest */
+/**
+ */
 
-  echo """/* eslint-env jest */
-  /**
-   */
+const $filename = require('./$filename')
 
-  const $filename = require('./$filename')
+describe('$filename()', () => {
+  test('Given "helloworld", should return "l"', () => {
+    const given = ''
+    const expected = ''
 
-  describe('$filename()', () => {
-    test('Given "helloworld", should return "l"', () => {
-      const given = ''
-      const expected = ''
-
-      const actual = $filename(given)
-      expect(actual).toEqual(expected)
-    })
+    const actual = $filename(given)
+    expect(actual).toEqual(expected)
   })
+})
   """ >  "$last_dir/$filename.test.js"
 fi
 
