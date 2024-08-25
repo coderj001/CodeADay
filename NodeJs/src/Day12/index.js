@@ -1,3 +1,3 @@
-const longestPalindromeString = require('./longestPalindromeString')
+const wordWrap = require('./wordWrap')
 
-longestPalindromeString('abc')
+wordWrap([], 6)
