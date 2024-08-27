@@ -5,16 +5,21 @@ Say that you are a traveler on a 2D grid. You begin in the top-left corner and y
 In how many ways can you travel to the goal on a grid with dimensions m * n?
 """
 
+"""
+Time Complexity: O(m+n)
+Space Complexity: O(m+n)
+"""
 def gridTraveler(m: int, n: int, memo: dict={}):
+    key = f"{m}x{n}"
     if m == 0 or n == 0:
         return 0
     if m == 1 and n == 1:
         return 1
-    if f"{m}x{n}" in memo:
-        return memo.get(f"{m}x{n}")
+    if key in memo:
+        return memo.get(key)
 
-    memo[f"{m}x{n}"] = gridTraveler(m-1, n) + gridTraveler(m, n-1)
-    return memo[f"{m}x{n}"]
+    memo[key] = gridTraveler(m-1, n) + gridTraveler(m, n-1)
+    return memo[key]
 
 if __name__ == "__main__":
     __import__('pprint').pprint(gridTraveler(1,1))
