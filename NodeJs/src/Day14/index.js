@@ -1,3 +1,3 @@
-const twoNumSum = require('./twoNumSum')
+const threeNumSum = require('./threeNumSum')
 
-console.log(twoNumSum([3, 5, -4, 8, 11, 1, -1, 6], 10))
+console.log(threeNumSum([-3, 1, 2, -1, 4], 0))

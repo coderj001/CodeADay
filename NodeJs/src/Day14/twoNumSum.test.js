@@ -11,7 +11,16 @@ describe('twoNumSum()', () => {
   test('should return [11, -1] when the sum of these two numbers equals K=10', () => {
     const given = [3, 5, -4, 8, 11, 1, -1, 6]
     const K = 10
-    const expected = [11, -1]
+    const expected = [-1, 11]
+
+    const actual = twoNumSum(given, K)
+    expect(actual).toEqual(expected)
+  })
+
+  test('should return [2, 4] when the sum of these two numbers equals K=6', () => {
+    const given = [1, 2, 4, 5]
+    const K = 6
+    const expected = [2, 4]
 
     const actual = twoNumSum(given, K)
     expect(actual).toEqual(expected)
@@ -58,6 +67,16 @@ describe('twoNumSum()', () => {
     const given = [1, -2, 4, 5]
     const K = 3
     const expected = [-2, 5]
+
+    const actual = twoNumSum(given, K)
+    expect(actual).toEqual(expected)
+  })
+
+  // Edge case with all negative numbers
+  test('should return [-4, -2] when the sum of these two numbers equals K=-6', () => {
+    const given = [-1, -2, -4, -5]
+    const K = -6
+    const expected = [-4, -2]
 
     const actual = twoNumSum(given, K)
     expect(actual).toEqual(expected)
