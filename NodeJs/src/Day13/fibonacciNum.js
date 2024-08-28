@@ -15,6 +15,4 @@ function fibonacciNum (n, memo = {}) {
   return memo[n]
 }
 
-
-
 module.exports = fibonacciNum
