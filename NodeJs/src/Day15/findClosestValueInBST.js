@@ -1,3 +1,4 @@
+// Time, Avg: O(log(n))  Worst: O(n)
 function findClosestValueInBST (tree, K) {
   let closest = tree.data
   while (tree !== null) {
