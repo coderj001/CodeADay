@@ -23,3 +23,11 @@ mkdir -p "$target_dir"
 cp -r "$template_dir"/* "$target_dir"/
 
 echo "Project '$target_dir' created successfully."
+
+mkdir -p "$target_dir/include"
+touch "$target_dir/include/$target_dir.h"
+
+mkdir -p "$target_dir/tests"
+touch "$target_dir/tests/${target_dir}Test.cpp"
+
+touch "$target_dir/src/${target_dir}.cpp"
