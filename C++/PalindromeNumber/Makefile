@@ -14,7 +14,7 @@ OBJS = $(SRCS_NO_MAIN:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 TEST_FILES = $(wildcard $(TEST_DIR)/*.cpp)
 TEST_OBJ_FILES = $(TEST_FILES:$(TEST_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-TARGET = $(BIN_DIR)/PROJECT_NAME
+TARGET = $(BIN_DIR)/PalindromeNumber
 TEST_TARGET = $(BIN_DIR)/tests
 
 # Build the main executable

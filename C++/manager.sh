@@ -22,6 +22,11 @@ mkdir -p "$target_dir"
 # Copy the template contents into the new directory
 cp -r "$template_dir"/* "$target_dir"/
 
+# Replace PROJECT_NAME with the actual project name in the Makefile
+if [ -f "$target_dir/Makefile" ]; then
+    sed -i "s/PROJECT_NAME/$target_dir/g" "$target_dir/Makefile"
+fi
+
 echo "Project '$target_dir' created successfully."
 
 mkdir -p "$target_dir/include"
