@@ -1,13 +1,23 @@
 #!/bin/bash
 
-# Colors for output
+# Colors for output - Using printf-compatible format
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 MAGENTA='\033[0;35m'
+BOLD='\033[1m'
 NC='\033[0m' # No Color
+
+# Color print functions for consistent output
+print_red() { printf "${RED}%s${NC}\n" "$1"; }
+print_green() { printf "${GREEN}%s${NC}\n" "$1"; }
+print_yellow() { printf "${YELLOW}%s${NC}\n" "$1"; }
+print_blue() { printf "${BLUE}%s${NC}\n" "$1"; }
+print_cyan() { printf "${CYAN}%s${NC}\n" "$1"; }
+print_magenta() { printf "${MAGENTA}%s${NC}\n" "$1"; }
+print_bold() { printf "${BOLD}%s${NC}\n" "$1"; }
 
 # Default values
 TEMPLATE_DIR="template"
@@ -17,173 +27,163 @@ DIFFICULTY=""
 
 # Function to display usage
 usage() {
-    cat << EOF
-${CYAN}╔════════════════════════════════════════════════════════════════╗
-║                   ${BLUE}DSA Project Manager${CYAN}                         ║
-║              Manage your DSA journey with ease!                ║
-╚════════════════════════════════════════════════════════════════╝${NC}
+    printf "${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}\n\n"
+    printf "${CYAN}║                   ${BLUE}DSA Project Manager${CYAN}                         ║${NC}\n\n"
+    printf "${CYAN}║              Manage your DSA journey with ease!                ║${NC}\n\n"
+    printf "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}\n\n"
+    printf "\n\n"
 
-${YELLOW}USAGE:${NC}
-    $0 [OPTIONS] <project_name>
+    printf "${YELLOW}USAGE:${NC}\n\n"
+    printf "    $0 [OPTIONS] <project_name>\n\n\n"
 
-${YELLOW}OPTIONS:${NC}
-    ${GREEN}-h, --help${NC}              Show this help message
-    ${GREEN}-t, --type TYPE${NC}         Specify problem type (see types below)
-    ${GREEN}-d, --difficulty LEVEL${NC}  Set difficulty: easy, medium, hard
-    ${GREEN}-c, --testcases${NC}         Generate sample test case templates
-    ${GREEN}-i, --interactive${NC}       Launch interactive setup wizard
-    ${GREEN}-l, --list${NC}              List all existing projects
-    ${GREEN}-r, --run PROJECT${NC}       Build and execute a project
-    ${GREEN}--clean PROJECT${NC}         Remove build files
-    ${GREEN}--guide${NC}                 Show problem type selection guide
+    printf "${YELLOW}OPTIONS:${NC}\n\n"
+    printf "    ${GREEN}-h, --help${NC}              Show this help message\n\n"
+    printf "    ${GREEN}-t, --type TYPE${NC}         Specify problem type (see types below)\n\n"
+    printf "    ${GREEN}-d, --difficulty LEVEL${NC}  Set difficulty: easy, medium, hard\n\n"
+    printf "    ${GREEN}-c, --testcases${NC}         Generate sample test case templates\n\n"
+    printf "    ${GREEN}-i, --interactive${NC}       Launch interactive setup wizard\n\n"
+    printf "    ${GREEN}-l, --list${NC}              List all existing projects\n\n"
+    printf "    ${GREEN}-r, --run PROJECT${NC}       Build and execute a project\n\n"
+    printf "    ${GREEN}--clean PROJECT${NC}         Remove build files\n\n"
+    printf "    ${GREEN}--guide${NC}                 Show problem type selection guide\n\n\n"
 
-${YELLOW}PROBLEM TYPES:${NC}
-    ${CYAN}Data Structures:${NC}
-        array          - Arrays, subarrays, matrices
-        string         - String manipulation, pattern matching
-        linked-list    - Singly/doubly linked lists
-        stack          - LIFO operations, monotonic stack
-        queue          - FIFO, deque, circular queue
-        heap           - Priority queue, min/max heap
-        tree           - Binary tree, BST, N-ary tree
-        graph          - Graph algorithms, traversals
+    printf "${YELLOW}PROBLEM TYPES:${NC}\n\n"
+    printf "    ${CYAN}Data Structures:${NC}\n\n"
+    printf "        array          - Arrays, subarrays, matrices\n\n"
+    printf "        string         - String manipulation, pattern matching\n\n"
+    printf "        linked-list    - Singly/doubly linked lists\n\n"
+    printf "        stack          - LIFO operations, monotonic stack\n\n"
+    printf "        queue          - FIFO, deque, circular queue\n\n"
+    printf "        heap           - Priority queue, min/max heap\n\n"
+    printf "        tree           - Binary tree, BST, N-ary tree\n\n"
+    printf "        graph          - Graph algorithms, traversals\n\n"
+    printf "    \n\n"
+    printf "    ${CYAN}Algorithmic Paradigms:${NC}\n\n"
+    printf "        sorting        - Sorting algorithms\n\n"
+    printf "        searching      - Binary search, linear search\n\n"
+    printf "        dp             - Dynamic programming\n\n"
+    printf "        greedy         - Greedy algorithms\n\n"
+    printf "        backtracking   - Recursive backtracking\n\n"
+    printf "        math           - Mathematical problems\n\n"
+    printf "        general        - Miscellaneous problems\n\n\n"
 
-    ${CYAN}Algorithmic Paradigms:${NC}
-        sorting        - Sorting algorithms
-        searching      - Binary search, linear search
-        dp             - Dynamic programming
-        greedy         - Greedy algorithms
-        backtracking   - Recursive backtracking
-        math           - Mathematical problems
-        general        - Miscellaneous problems
+    printf "${YELLOW}EXAMPLES:${NC}\n\n"
+    printf "    ${BLUE}# Create a basic project${NC}\n\n"
+    printf "    $0 two_sum\n\n\n"
+    printf "    ${BLUE}# Create with type and difficulty${NC}\n\n"
+    printf "    $0 -t array -d easy two_sum\n\n\n"
+    printf "    ${BLUE}# Create with test cases${NC}\n\n"
+    printf "    $0 -t tree -c -d medium binary_tree_traversal\n\n\n"
+    printf "    ${BLUE}# Interactive mode (recommended for beginners)${NC}\n\n"
+    printf "    $0 -i\n\n\n"
+    printf "    ${BLUE}# View problem type guide${NC}\n\n"
+    printf "    $0 --guide\n\n\n"
+    printf "    ${BLUE}# List all projects${NC}\n\n"
+    printf "    $0 -l\n\n\n"
+    printf "    ${BLUE}# Build and run${NC}\n\n"
+    printf "    $0 -r two_sum\n\n\n"
 
-${YELLOW}EXAMPLES:${NC}
-    ${BLUE}# Create a basic project${NC}
-    $0 two_sum
+    printf "${YELLOW}QUICK START:${NC}\n\n"
+    printf "    1. Run interactive mode: ${GREEN}$0 -i${NC}\n\n"
+    printf "    2. Follow the prompts to create your project\n\n"
+    printf "    3. Navigate to project: ${GREEN}cd <project_name>${NC}\n\n"
+    printf "    4. Implement solution in: ${GREEN}src/<project_name>.cpp${NC}\n\n"
+    printf "    5. Build and test: ${GREEN}make test${NC}\n\n\n"
 
-    ${BLUE}# Create with type and difficulty${NC}
-    $0 -t array -d easy two_sum
+    printf "${YELLOW}REQUIREMENTS:${NC}\n\n"
+    printf "    • g++ with C++17 support\n\n"
+    printf "    • Google Test (libgtest-dev)\n\n"
+    printf "    • make\n\n\n"
 
-    ${BLUE}# Create with test cases${NC}
-    $0 -t tree -c -d medium binary_tree_traversal
+    printf "${YELLOW}TIPS:${NC}\n\n"
+    printf "    • Use ${GREEN}-c${NC} flag to auto-generate test templates\n\n"
+    printf "    • Document your approach in README.md\n\n"
+    printf "    • Run ${GREEN}$0 --guide${NC} for help choosing problem types\n\n\n"
 
-    ${BLUE}# Interactive mode (recommended for beginners)${NC}
-    $0 -i
-
-    ${BLUE}# View problem type guide${NC}
-    $0 --guide
-
-    ${BLUE}# List all projects${NC}
-    $0 -l
-
-    ${BLUE}# Build and run${NC}
-    $0 -r two_sum
-
-${YELLOW}QUICK START:${NC}
-    1. Run interactive mode: ${GREEN}$0 -i${NC}
-    2. Follow the prompts to create your project
-    3. Navigate to project: ${GREEN}cd <project_name>${NC}
-    4. Implement solution in: ${GREEN}src/<project_name>.cpp${NC}
-    5. Build and test: ${GREEN}make test${NC}
-
-${YELLOW}REQUIREMENTS:${NC}
-    • g++ with C++17 support
-    • Google Test (libgtest-dev)
-    • make
-
-${YELLOW}TIPS:${NC}
-    • Use ${GREEN}-c${NC} flag to auto-generate test templates
-    • Document your approach in README.md
-    • Run ${GREEN}$0 --guide${NC} for help choosing problem types
-
-For more information, visit: https://github.com/google/googletest
-
-EOF
+    printf "For more information, visit: https://github.com/google/googletest\n\n\n"
     exit 0
 }
 
 # Function to show problem type guide
 show_guide() {
-    cat << EOF
-${CYAN}╔════════════════════════════════════════════════════════════════╗
-║              ${BLUE}Problem Type Selection Guide${CYAN}                     ║
-╚════════════════════════════════════════════════════════════════╝${NC}
+    printf "${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}\n\n"
+    printf "${CYAN}║              ${BLUE}Problem Type Selection Guide${CYAN}                     ║${NC}\n\n"
+    printf "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}\n\n"
+    printf "\n\n"
 
-${YELLOW}How to Choose the Right Problem Type:${NC}
+    printf "${YELLOW}How to Choose the Right Problem Type:${NC}\n\n\n"
 
-${GREEN}ARRAY${NC} - Choose when:
-  • Working with contiguous memory/indexed elements
-  • Sliding window, two pointers, prefix sum
-  • Examples: Two Sum, Maximum Subarray, Product of Array
+    printf "${GREEN}ARRAY${NC} - Choose when:\n\n"
+    printf "  • Working with contiguous memory/indexed elements\n\n"
+    printf "  • Sliding window, two pointers, prefix sum\n\n"
+    printf "  • Examples: Two Sum, Maximum Subarray, Product of Array\n\n\n"
 
-${GREEN}STRING${NC} - Choose when:
-  • Text processing, pattern matching
-  • Substring problems, palindromes
-  • Examples: Longest Substring, Valid Anagram, KMP
+    printf "${GREEN}STRING${NC} - Choose when:\n\n"
+    printf "  • Text processing, pattern matching\n\n"
+    printf "  • Substring problems, palindromes\n\n"
+    printf "  • Examples: Longest Substring, Valid Anagram, KMP\n\n\n"
 
-${GREEN}LINKED-LIST${NC} - Choose when:
-  • Dynamic insertion/deletion needed
-  • Reverse, cycle detection, merge operations
-  • Examples: Reverse List, Detect Cycle, Merge Lists
+    printf "${GREEN}LINKED-LIST${NC} - Choose when:\n\n"
+    printf "  • Dynamic insertion/deletion needed\n\n"
+    printf "  • Reverse, cycle detection, merge operations\n\n"
+    printf "  • Examples: Reverse List, Detect Cycle, Merge Lists\n\n\n"
 
-${GREEN}STACK${NC} - Choose when:
-  • LIFO order needed
-  • Parentheses matching, expression evaluation
-  • Examples: Valid Parentheses, Min Stack, Asteroid Collision
+    printf "${GREEN}STACK${NC} - Choose when:\n\n"
+    printf "  • LIFO order needed\n\n"
+    printf "  • Parentheses matching, expression evaluation\n\n"
+    printf "  • Examples: Valid Parentheses, Min Stack, Asteroid Collision\n\n\n"
 
-${GREEN}QUEUE${NC} - Choose when:
-  • FIFO order needed
-  • Level-order traversal, scheduling
-  • Examples: Recent Counter, Design Queue, Circular Queue
+    printf "${GREEN}QUEUE${NC} - Choose when:\n\n"
+    printf "  • FIFO order needed\n\n"
+    printf "  • Level-order traversal, scheduling\n\n"
+    printf "  • Examples: Recent Counter, Design Queue, Circular Queue\n\n\n"
 
-${GREEN}HEAP${NC} - Choose when:
-  • Need quick access to min/max element
-  • K-th largest/smallest problems
-  • Examples: Kth Largest, Merge K Lists, Top K Frequent
+    printf "${GREEN}HEAP${NC} - Choose when:\n\n"
+    printf "  • Need quick access to min/max element\n\n"
+    printf "  • K-th largest/smallest problems\n\n"
+    printf "  • Examples: Kth Largest, Merge K Lists, Top K Frequent\n\n\n"
 
-${GREEN}TREE${NC} - Choose when:
-  • Hierarchical data structure
-  • Tree traversals (inorder, preorder, postorder)
-  • Examples: Binary Tree Traversal, LCA, Path Sum
+    printf "${GREEN}TREE${NC} - Choose when:\n\n"
+    printf "  • Hierarchical data structure\n\n"
+    printf "  • Tree traversals (inorder, preorder, postorder)\n\n"
+    printf "  • Examples: Binary Tree Traversal, LCA, Path Sum\n\n\n"
 
-${GREEN}GRAPH${NC} - Choose when:
-  • Network/relationship problems
-  • BFS, DFS, shortest path, connectivity
-  • Examples: Number of Islands, Course Schedule, Dijkstra
+    printf "${GREEN}GRAPH${NC} - Choose when:\n\n"
+    printf "  • Network/relationship problems\n\n"
+    printf "  • BFS, DFS, shortest path, connectivity\n\n"
+    printf "  • Examples: Number of Islands, Course Schedule, Dijkstra\n\n\n"
 
-${GREEN}DYNAMIC PROGRAMMING${NC} - Choose when:
-  • Optimization problems (min/max)
-  • Overlapping subproblems
-  • Examples: Fibonacci, Knapsack, LCS
+    printf "${GREEN}DYNAMIC PROGRAMMING${NC} - Choose when:\n\n"
+    printf "  • Optimization problems (min/max)\n\n"
+    printf "  • Overlapping subproblems\n\n"
+    printf "  • Examples: Fibonacci, Knapsack, LCS\n\n\n"
 
-${GREEN}GREEDY${NC} - Choose when:
-  • Local optimum leads to global optimum
-  • Interval scheduling, activity selection
-  • Examples: Jump Game, Gas Station, Meeting Rooms
+    printf "${GREEN}GREEDY${NC} - Choose when:\n\n"
+    printf "  • Local optimum leads to global optimum\n\n"
+    printf "  • Interval scheduling, activity selection\n\n"
+    printf "  • Examples: Jump Game, Gas Station, Meeting Rooms\n\n\n"
 
-${GREEN}BACKTRACKING${NC} - Choose when:
-  • Need to explore all possibilities
-  • Permutations, combinations, subset problems
-  • Examples: N-Queens, Sudoku Solver, Generate Parentheses
+    printf "${GREEN}BACKTRACKING${NC} - Choose when:\n\n"
+    printf "  • Need to explore all possibilities\n\n"
+    printf "  • Permutations, combinations, subset problems\n\n"
+    printf "  • Examples: N-Queens, Sudoku Solver, Generate Parentheses\n\n\n"
 
-${GREEN}SORTING${NC} - Choose when:
-  • Implementing/learning sorting algorithms
-  • Custom comparators needed
-  • Examples: Quick Sort, Merge Sort, Bucket Sort
+    printf "${GREEN}SORTING${NC} - Choose when:\n\n"
+    printf "  • Implementing/learning sorting algorithms\n\n"
+    printf "  • Custom comparators needed\n\n"
+    printf "  • Examples: Quick Sort, Merge Sort, Bucket Sort\n\n\n"
 
-${GREEN}SEARCHING${NC} - Choose when:
-  • Finding elements in sorted/unsorted arrays
-  • Binary search variants
-  • Examples: Binary Search, Search in Rotated Array
+    printf "${GREEN}SEARCHING${NC} - Choose when:\n\n"
+    printf "  • Finding elements in sorted/unsorted arrays\n\n"
+    printf "  • Binary search variants\n\n"
+    printf "  • Examples: Binary Search, Search in Rotated Array\n\n\n"
 
-${GREEN}MATH${NC} - Choose when:
-  • Mathematical computations
-  • Number theory, combinatorics
-  • Examples: Fibonacci, Prime Numbers, GCD/LCM
+    printf "${GREEN}MATH${NC} - Choose when:\n\n"
+    printf "  • Mathematical computations\n\n"
+    printf "  • Number theory, combinatorics\n\n"
+    printf "  • Examples: Fibonacci, Prime Numbers, GCD/LCM\n\n\n"
 
-${YELLOW}Still unsure?${NC} Use ${GREEN}$0 -i${NC} for interactive mode!
-
-EOF
+    printf "${YELLOW}Still unsure?${NC} Use ${GREEN}$0 -i${NC} for interactive mode!\n\n\n"
     exit 0
 }
 
@@ -278,7 +278,7 @@ private:
 #endif // ${project^^}_H
 EOF
 
-    echo -e "${GREEN}✓${NC} Header file created: $header_file"
+    printf "${GREEN}✓${NC} Header file created: $header_file\n"
 }
 
 # Function to create source file
@@ -304,7 +304,7 @@ void ${project^}::solve() {
 }
 EOF
 
-    echo -e "${GREEN}✓${NC} Source file created: $src_file"
+    printf "${GREEN}✓${NC} Source file created: $src_file\n"
 }
 
 # Function to create main.cpp
@@ -331,7 +331,7 @@ int main() {
 }
 EOF
 
-    echo -e "${GREEN}✓${NC} Main file created: $main_file"
+    printf "${GREEN}✓${NC} Main file created: $main_file\n"
 }
 
 # Function to create test file
@@ -446,7 +446,7 @@ int main(int argc, char **argv) {
 }
 EOF
 
-    echo -e "${GREEN}✓${NC} Test file created with Google Test: $test_file"
+    printf "${GREEN}✓${NC} Test file created with Google Test: $test_file\n"
 }
 
 # Function to create README
@@ -522,7 +522,7 @@ make clean
 
 EOF
 
-    echo -e "${GREEN}✓${NC} README created: $readme_file"
+    printf "${GREEN}✓${NC} README created: $readme_file\n"
 }
 
 # Function to create Makefile
@@ -631,12 +631,12 @@ EOF
     # Replace PROJECT_NAME with actual project name
     sed -i "s/PROJECT_NAME/$project/g" "$makefile"
 
-    echo -e "${GREEN}✓${NC} Makefile created with Google Test support: $makefile"
+    printf "${GREEN}✓${NC} Makefile created with Google Test support: $makefile\n"
 }
 
 # Function to list all projects
 list_projects() {
-    echo -e "${BLUE}Existing DSA Projects:${NC}"
+    printf "${BLUE}Existing DSA Projects:${NC}\n"
     echo "========================================"
 
     local count=0
@@ -670,21 +670,21 @@ run_project() {
     local project=$1
 
     if [ ! -d "$project" ]; then
-        echo -e "${RED}Error: Project '$project' not found.${NC}"
+        printf "${RED}Error: Project '$project' not found.${NC}\n"
         exit 1
     fi
 
-    echo -e "${BLUE}Building and running: $project${NC}"
+    printf "${BLUE}Building and running: $project${NC}\n"
     cd "$project" || exit
 
     make clean
     make
 
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}Build successful!${NC}"
+        printf "${GREEN}Build successful!${NC}\n"
         make test
     else
-        echo -e "${RED}Build failed!${NC}"
+        printf "${RED}Build failed!${NC}\n"
         exit 1
     fi
 
@@ -696,40 +696,40 @@ clean_project() {
     local project=$1
 
     if [ ! -d "$project" ]; then
-        echo -e "${RED}Error: Project '$project' not found.${NC}"
+        printf "${RED}Error: Project '$project' not found.${NC}\n"
         exit 1
     fi
 
-    echo -e "${YELLOW}Cleaning: $project${NC}"
+    printf "${YELLOW}Cleaning: $project${NC}\n"
     cd "$project" || exit
     make clean
-    echo -e "${GREEN}Cleaned successfully!${NC}"
+    printf "${GREEN}Cleaned successfully!${NC}\n"
     cd ..
 }
 
 # Interactive mode
 interactive_mode() {
-    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${CYAN}║          ${BLUE}DSA Project Setup - Interactive Mode${CYAN}              ║${NC}"
-    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}"
+    printf "${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}\n"
+    printf "${CYAN}║          ${BLUE}DSA Project Setup - Interactive Mode${CYAN}              ║${NC}\n"
+    printf "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}\n"
     echo ""
 
     # Get project name
-    echo -e "${YELLOW}Step 1/4: Project Name${NC}"
-    echo -e "Enter a descriptive name (e.g., two_sum, binary_tree_traversal)"
+    printf "${YELLOW}Step 1/4: Project Name${NC}\n"
+    printf "Enter a descriptive name (e.g., two_sum, binary_tree_traversal)\n"
     echo -ne "${GREEN}Project name:${NC} "
     read project_name
     if [ -z "$project_name" ]; then
-        echo -e "${RED}Error: Project name cannot be empty${NC}"
+        printf "${RED}Error: Project name cannot be empty${NC}\n"
         exit 1
     fi
     echo ""
 
     # Get problem type with descriptions
-    echo -e "${YELLOW}Step 2/4: Problem Type${NC}"
-    echo -e "${BLUE}Choose the data structure or algorithm paradigm:${NC}"
+    printf "${YELLOW}Step 2/4: Problem Type${NC}\n"
+    printf "${BLUE}Choose the data structure or algorithm paradigm:${NC}\n"
     echo ""
-    echo -e "${CYAN}Data Structures:${NC}"
+    printf "${CYAN}Data Structures:${NC}\n"
     echo "  1)  Array           - Indexed collections, subarrays"
     echo "  2)  String          - Text processing, patterns"
     echo "  3)  Linked List     - Dynamic lists, pointers"
@@ -739,7 +739,7 @@ interactive_mode() {
     echo "  7)  Tree            - Binary tree, BST, traversals"
     echo "  8)  Graph           - Networks, DFS, BFS, paths"
     echo ""
-    echo -e "${CYAN}Algorithmic Paradigms:${NC}"
+    printf "${CYAN}Algorithmic Paradigms:${NC}\n"
     echo "  9)  Sorting         - Sort algorithms"
     echo "  10) Searching       - Binary search variants"
     echo "  11) Dynamic Programming - Optimization, memoization"
@@ -768,11 +768,11 @@ interactive_mode() {
         14) PROBLEM_TYPE="math" ;;
         *) PROBLEM_TYPE="general" ;;
     esac
-    echo -e "${GREEN}✓${NC} Selected: ${YELLOW}$PROBLEM_TYPE${NC}"
+    printf "${GREEN}✓${NC} Selected: ${YELLOW}$PROBLEM_TYPE${NC}\n"
     echo ""
 
     # Get difficulty
-    echo -e "${YELLOW}Step 3/4: Difficulty Level${NC}"
+    printf "${YELLOW}Step 3/4: Difficulty Level${NC}\n"
     echo "  1) Easy       - Fundamental concepts, straightforward"
     echo "  2) Medium     - Multiple concepts, moderate complexity"
     echo "  3) Hard       - Complex algorithms, optimization needed"
@@ -787,12 +787,12 @@ interactive_mode() {
         3) DIFFICULTY="Hard" ;;
         *) DIFFICULTY="Not specified" ;;
     esac
-    echo -e "${GREEN}✓${NC} Selected: ${YELLOW}$DIFFICULTY${NC}"
+    printf "${GREEN}✓${NC} Selected: ${YELLOW}$DIFFICULTY${NC}\n"
     echo ""
 
     # Ask about test cases
-    echo -e "${YELLOW}Step 4/4: Test Case Templates${NC}"
-    echo -e "Generate sample test case templates? (Recommended)"
+    printf "${YELLOW}Step 4/4: Test Case Templates${NC}\n"
+    printf "Generate sample test case templates? (Recommended)\n"
     echo "  - Basic test case"
     echo "  - Sample test cases (2)"
     echo "  - Edge cases (empty, single, large, negative)"
@@ -801,26 +801,26 @@ interactive_mode() {
     read add_tests
     if [ "$add_tests" = "y" ] || [ "$add_tests" = "Y" ]; then
         ADD_TESTCASES=true
-        echo -e "${GREEN}✓${NC} Test templates will be generated"
+        printf "${GREEN}✓${NC} Test templates will be generated\n"
     else
-        echo -e "${YELLOW}○${NC} Only basic test will be generated"
+        printf "${YELLOW}○${NC} Only basic test will be generated\n"
     fi
     echo ""
 
     # Summary
-    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${CYAN}║                      Configuration Summary                     ║${NC}"
-    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}"
-    echo -e "  Project Name: ${GREEN}$project_name${NC}"
-    echo -e "  Type:         ${YELLOW}$PROBLEM_TYPE${NC}"
-    echo -e "  Difficulty:   ${MAGENTA}$DIFFICULTY${NC}"
-    echo -e "  Test Cases:   $([ "$ADD_TESTCASES" = true ] && echo -e "${GREEN}Enabled${NC}" || echo -e "${YELLOW}Basic only${NC}")"
+    printf "${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}\n"
+    printf "${CYAN}║                      Configuration Summary                     ║${NC}\n"
+    printf "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}\n"
+    printf "  Project Name: ${GREEN}$project_name${NC}\n"
+    printf "  Type:         ${YELLOW}$PROBLEM_TYPE${NC}\n"
+    printf "  Difficulty:   ${MAGENTA}$DIFFICULTY${NC}\n"
+    printf "  Test Cases:   $([ "$ADD_TESTCASES" = true ] && printf "${GREEN}Enabled${NC}" || printf "${YELLOW}Basic only${NC}")\n"
     echo ""
     echo -ne "${GREEN}Proceed with creation? (y/n):${NC} "
     read confirm
 
     if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
-        echo -e "${YELLOW}Project creation cancelled.${NC}"
+        printf "${YELLOW}Project creation cancelled.${NC}\n"
         exit 0
     fi
 
@@ -834,15 +834,15 @@ create_project() {
 
     # Check if project already exists
     if [ -d "$project" ]; then
-        echo -e "${RED}Error: Project '$project' already exists.${NC}"
+        printf "${RED}Error: Project '$project' already exists.${NC}\n"
         exit 1
     fi
 
-    echo -e "${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${CYAN}║${NC}  Creating DSA project: ${GREEN}$project${NC}"
-    echo -e "${CYAN}║${NC}  Type: ${YELLOW}$PROBLEM_TYPE${NC}"
-    echo -e "${CYAN}║${NC}  Difficulty: ${MAGENTA}${DIFFICULTY:-Not specified}${NC}"
-    echo -e "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}"
+    printf "${CYAN}╔════════════════════════════════════════════════════════════════╗${NC}\n"
+    printf "${CYAN}║${NC}  Creating DSA project: ${GREEN}$project${NC}\n"
+    printf "${CYAN}║${NC}  Type: ${YELLOW}$PROBLEM_TYPE${NC}\n"
+    printf "${CYAN}║${NC}  Difficulty: ${MAGENTA}${DIFFICULTY:-Not specified}${NC}\n"
+    printf "${CYAN}╚════════════════════════════════════════════════════════════════╝${NC}\n"
     echo ""
 
     # Create directory structure
@@ -871,23 +871,23 @@ build/
 EOF
 
     echo ""
-    echo -e "${GREEN}╔════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${GREEN}║  ✓ Project '$project' created successfully!${NC}"
-    echo -e "${GREEN}╚════════════════════════════════════════════════════════════════╝${NC}"
+    printf "${GREEN}╔════════════════════════════════════════════════════════════════╗${NC}\n"
+    printf "${GREEN}║  ✓ Project '$project' created successfully!${NC}\n"
+    printf "${GREEN}╚════════════════════════════════════════════════════════════════╝${NC}\n"
     echo ""
-    echo -e "${YELLOW}Next steps:${NC}"
-    echo -e "  ${CYAN}1.${NC} cd $project"
-    echo -e "  ${CYAN}2.${NC} Edit ${GREEN}src/${project}.cpp${NC} with your solution"
-    echo -e "  ${CYAN}3.${NC} Add test cases in ${GREEN}tests/${project}Test.cpp${NC}"
-    echo -e "  ${CYAN}4.${NC} Run ${GREEN}'make test'${NC} to build and test"
-    echo -e "  ${CYAN}5.${NC} Run ${GREEN}'make run'${NC} to execute main program"
+    printf "${YELLOW}Next steps:${NC}\n"
+    printf "  ${CYAN}1.${NC} cd $project\n"
+    printf "  ${CYAN}2.${NC} Edit ${GREEN}src/${project}.cpp${NC} with your solution\n"
+    printf "  ${CYAN}3.${NC} Add test cases in ${GREEN}tests/${project}Test.cpp${NC}\n"
+    printf "  ${CYAN}4.${NC} Run ${GREEN}'make test'${NC} to build and test\n"
+    printf "  ${CYAN}5.${NC} Run ${GREEN}'make run'${NC} to execute main program\n"
     echo ""
-    echo -e "${YELLOW}Available commands:${NC}"
-    echo -e "  ${GREEN}make${NC}        - Build the project"
-    echo -e "  ${GREEN}make test${NC}   - Build and run tests (Google Test)"
-    echo -e "  ${GREEN}make run${NC}    - Build and run main program"
-    echo -e "  ${GREEN}make clean${NC}  - Clean build files"
-    echo -e "  ${GREEN}make help${NC}   - Show all available targets"
+    printf "${YELLOW}Available commands:${NC}\n"
+    printf "  ${GREEN}make${NC}        - Build the project\n"
+    printf "  ${GREEN}make test${NC}   - Build and run tests (Google Test)\n"
+    printf "  ${GREEN}make run${NC}    - Build and run main program\n"
+    printf "  ${GREEN}make clean${NC}  - Clean build files\n"
+    printf "  ${GREEN}make help${NC}   - Show all available targets\n"
     echo ""
 }
 
@@ -929,8 +929,8 @@ while [[ $# -gt 0 ]]; do
             exit 0
             ;;
         -*)
-            echo -e "${RED}Unknown option: $1${NC}"
-            echo -e "Run ${GREEN}'$0 --help'${NC} for usage information"
+            printf "${RED}Unknown option: $1${NC}\n"
+            printf "Run ${GREEN}'$0 --help'${NC} for usage information\n"
             exit 1
             ;;
         *)
@@ -942,9 +942,9 @@ done
 
 # Check if project name is provided
 if [ -z "$PROJECT_NAME" ]; then
-    echo -e "${RED}Error: Project name not provided${NC}"
-    echo -e "Run ${GREEN}'$0 --help'${NC} for usage information"
-    echo -e "Or use ${GREEN}'$0 -i'${NC} for interactive mode"
+    printf "${RED}Error: Project name not provided${NC}\n"
+    printf "Run ${GREEN}'$0 --help'${NC} for usage information\n"
+    printf "Or use ${GREEN}'$0 -i'${NC} for interactive mode\n"
     exit 1
 fi
 
